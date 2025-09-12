@@ -7,6 +7,6 @@ class Button(tb.Button):
             root,
             text = text, 
             bootstyle = "success",
-            padding = (50, 10),
+            padding = (30, 10),
             **kwargs
             )

@@ -4,7 +4,7 @@ from ui.main_frame import MainFrame
 def main():
     root = tb.Window(themename = "darkly")
     root.title("Quick DB")
-    width, height = 600, 400
+    width, height = 450, 325
     # center window
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
@@ -14,10 +14,6 @@ def main():
 
     main_frame = MainFrame(root)
     root.mainloop()
-
-
-
-
 
 if __name__=="__main__":
     main()
