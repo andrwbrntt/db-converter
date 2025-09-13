@@ -1,6 +1,6 @@
 import ttkbootstrap as tb
-from tkinter import ttk
 from ui.buttons import Button
+import tksheet
 
 class DisplayFrame(tb.Frame):
     def __init__(self, parent, df):
@@ -8,41 +8,34 @@ class DisplayFrame(tb.Frame):
         self.pack(fill = "both", expand = True)
         self.df = df
 
-        preview_frame = tb.Frame(self)
-        preview_frame.pack(fill = "both", expand = True)
+        preview_frame = tb.Frame(self, borderwidth = 2, relief = "solid")
+        preview_frame.pack(fill = "both", expand = True, padx = 25, pady = (25,0))
 
-        # build a treeview
-        preview = ttk.Treeview(preview_frame)
-        preview.grid(row = 0, column = 0, sticky = "nsew")
+        preview = tksheet.Sheet(preview_frame)
+        preview.pack(fill = "both", expand = True)
+        preview.headers(df.columns.tolist())
+        preview.set_sheet_data(df.values.tolist())
+        preview.set_options(
+            table_fg = "white",
+            table_selected_cells_fg = "white",
+            header_fg = "white",
+            index_fg = "white"
+        )
+        preview.redraw()
 
-        # grid ends up being better for scrollbars than pack
-        v_scroll = ttk.Scrollbar(preview_frame, orient = "vertical", command = preview.yview)
-        v_scroll.grid(row = 0, column = 1, sticky = "ns")
-        preview.configure(yscrollcommand = v_scroll.set)
-
-        h_scroll = ttk.Scrollbar(preview_frame, orient = "horizontal", command = preview.xview)
-        h_scroll.grid(row = 1, column = 0, sticky = "ew")
-        preview.configure(xscrollcommand = h_scroll.set)
-
-        preview_frame.grid_rowconfigure(0, weight = 1)
-        preview_frame.grid_columnconfigure(0, weight = 1)
-
-        preview["columns"] = list(self.df.columns)
-        preview["show"] = "headings"
-
-        for col in self.df.columns:
-            preview.heading(col, text = col)
-            preview.column(col, anchor = "center")
-        
-        for _, row in self.df.iterrows():
-            preview.insert("", "end", values = list(row))
-        
-        
         button_frame = tb.Frame(self)
-        button_frame.pack(fill = "x")
+        button_frame.pack(fill = "both", expand = True)
 
+        cancel_button = Button(button_frame, text = "Cancel", command = self.cancel_click)
+        cancel_button.pack(side = "left", padx = 25)
         confirm_button = Button(button_frame, text = "Confirm")
-        confirm_button.pack(side = "right", pady = 10, padx = 10)
+        confirm_button.pack(side = "right", padx = 25)
 
-        cancel_button = Button(button_frame, text = "Cancel")
-        cancel_button.pack(side = "left", pady = 10, padx = 10)
+    def cancel_click(self):
+        self.pack_forget()
+        from ui.main_frame import MainFrame
+        from main import initial_window
+        main_frame = MainFrame(self.master)
+        main_frame.pack(fill = "both", expand = True)
+        self.master.update_idletasks()
+        self.master.geometry(initial_window)

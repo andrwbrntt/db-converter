@@ -35,3 +35,5 @@ class MainFrame(tb.Frame):
                 self.df = pd.read_excel(file_path)
             self.pack_forget()
             display_frame = DisplayFrame(self.master, self.df)
+            self.master.update_idletasks()
+            self.master.geometry("600x450")
