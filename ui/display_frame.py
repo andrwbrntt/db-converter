@@ -17,12 +17,17 @@ class DisplayFrame(tb.Frame):
         preview = tksheet.Sheet(preview_frame)
         preview.pack(fill = "both", expand = True)
         preview.headers(df.columns.tolist())
+        preview.header_align("w")
         preview.set_sheet_data(df.values.tolist())
         preview.set_options(
-            table_fg = "white",
+            table_bg = "white",
+            table_fg = "black",
+            table_selected_cells_bg = "#198754",
             table_selected_cells_fg = "white",
-            header_fg = "white",
-            index_fg = "white"
+            header_bg = "white",
+            header_fg = "black",
+            index_bg = "white",
+            index_fg = "black"
         )
         preview.redraw()
 
