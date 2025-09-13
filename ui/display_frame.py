@@ -1,6 +1,9 @@
 import ttkbootstrap as tb
+from tkinter import filedialog
+from ttkbootstrap.dialogs import Messagebox
 from ui.buttons import Button
 import tksheet
+import sqlite3
 
 class DisplayFrame(tb.Frame):
     def __init__(self, parent, df):
@@ -28,7 +31,7 @@ class DisplayFrame(tb.Frame):
 
         cancel_button = Button(button_frame, text = "Cancel", command = self.cancel_click)
         cancel_button.pack(side = "left", padx = 25)
-        confirm_button = Button(button_frame, text = "Confirm")
+        confirm_button = Button(button_frame, text = "Confirm", command = self.confirm_click)
         confirm_button.pack(side = "right", padx = 25)
 
     def cancel_click(self):
@@ -39,3 +42,17 @@ class DisplayFrame(tb.Frame):
         main_frame.pack(fill = "both", expand = True)
         self.master.update_idletasks()
         self.master.geometry(initial_window)
+
+    def confirm_click(self):
+        save_path = filedialog.asksaveasfilename(
+            parent = self.master,
+            title = "Quick DB",
+            defaultextension = ".db",
+            filetypes = [("SQLite DB","*.db")]
+        )
+        if save_path:
+            conn = sqlite3.connect(save_path)
+            self.df.to_sql("data", conn, if_exists = "replace", index = False)
+            conn.close()
+            Messagebox.show_info(f"File converted successfully!", "Quick DB", parent=self.master)
+            self.master.destroy()
