@@ -26,7 +26,7 @@ The main goals for this project are:
 - Geometry managers (pack, grid, etc.)
 
 
-#### Disclaimer
+## Disclaimer
 While Copilot via VSCode is utilized for educational and search purposes, the work itself is my own.
 
 To aid learning, all autosuggestion features have been disabled.
