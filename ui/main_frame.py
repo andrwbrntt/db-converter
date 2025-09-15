@@ -28,12 +28,19 @@ class MainFrame(tb.Frame):
             title = "Select a file",
             filetypes = [("CSV files", "*.csv"),("Excel files", "*.xlsx: *.xls; *.xlsm; *.xlsb")]
             )
+        # unhide main window if filedialog cancelled or exited
         self.master.deiconify()
         if file_path:
             if file_path.endswith(".csv"):
                 self.df = pd.read_csv(file_path)
             elif file_path.endswith(".xlsx", ".xls", ".xlsm", ".xlsb"):
                 self.df = pd.read_excel(file_path)
+            self.df.columns = (
+                self.df.columns
+                .str.strip()
+                .str.lower()
+                .str.replace(" ", "_")
+            )
             self.pack_forget()
             display_frame = DisplayFrame(self.master, self.df)
             # resize for display frame
