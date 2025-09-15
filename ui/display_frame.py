@@ -11,6 +11,7 @@ class DisplayFrame(tb.Frame):
         self.pack(fill = "both", expand = True)
         self.df = df
 
+        # pack and grid produced the same result; opted for simplicity
         preview_frame = tb.Frame(self, borderwidth = 2, relief = "solid")
         preview_frame.pack(fill = "both", expand = True, padx = 25, pady = (25,0))
 
@@ -29,6 +30,7 @@ class DisplayFrame(tb.Frame):
             index_bg = "white",
             index_fg = "black"
         )
+        # force tksheet to update
         preview.redraw()
 
         button_frame = tb.Frame(self)
@@ -41,10 +43,12 @@ class DisplayFrame(tb.Frame):
 
     def cancel_click(self):
         self.pack_forget()
+        # import here to avoid circular imports
         from ui.main_frame import MainFrame
         from main import initial_window
         main_frame = MainFrame(self.master)
         main_frame.pack(fill = "both", expand = True)
+        # revert to initial window size
         self.master.update_idletasks()
         self.master.geometry(initial_window)
 
@@ -59,5 +63,5 @@ class DisplayFrame(tb.Frame):
             conn = sqlite3.connect(save_path)
             self.df.to_sql("data", conn, if_exists = "replace", index = False)
             conn.close()
-            Messagebox.show_info(f"File converted successfully!", "Quick DB", parent=self.master)
+            Messagebox.show_info(f"Conversion successful!", "Quick DB", parent=self.master)
             self.master.destroy()
