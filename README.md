@@ -58,6 +58,6 @@ python3 main.py
 
 
 ## Disclaimer
-While Copilot via VSCode is utilized for educational and search purposes, the work itself is my own.
+While Copilot via VSCode was utilized for educational and search purposes, the work itself is my own.
 
-To aid learning, all autosuggestion features have been disabled.
+To aid learning, all autosuggestion features were been disabled.
