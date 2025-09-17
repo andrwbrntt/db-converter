@@ -8,6 +8,37 @@ The main goals for this project are:
 - Create a usable tool to convert files
 - Learn how to modularize
 
+## Installation
+**1. Clone Repository**
+```bash
+https://github.com/andrwbrntt/quick-db.git
+```
+
+**2. Directory Navigation**
+```bash
+cd quick-db
+```
+
+**3. Create Virtual Environment**
+```bash
+python3 -m venv venv
+```
+
+**4. Activate Virtual Environment**
+```bash
+source venv/bin/activate
+```
+
+**5. Install Dependencies**
+```bash
+pip install -r requirements.txt
+```
+
+## Usage
+```bash
+python3 main.py
+```
+
 ## Learned
 **Setup**
 - MacOS overrode most visual appearance with tkinter, ttk and ttkbootstrap
